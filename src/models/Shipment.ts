@@ -15,17 +15,22 @@ const shipmentSchema = new mongoose.Schema({
     ],
     default : []
   },
-  
   currentETA: { type: String },
-  status: { type: String, enum: ['Pending', 'In Transit', 'Delivered'], default: 'Pending' }
+  status: { type: String, enum: ['Pending', 'In Transit', 'Delivered'], default: 'Pending' },
+  assignedDriver: { type: String, default: 'Not Assigned' },
+  vehicleDetails: {
+    vehicleNumber: { type: String, required: true },
+    vehicleType: { type: String, enum: ['Truck', 'Ship', 'Train', 'Air Cargo'], default: 'Truck' }
+  },
+
   },
 {timestamps:true});
 
 shipmentSchema.index({currentLocation : '2dsphere'});
 shipmentSchema.index({route : '2dsphere'})
 
-export type Shipment = InferSchemaType<typeof shipmentSchema>
+export type ShipmentType = InferSchemaType<typeof shipmentSchema>
 
 
-export default model<Shipment>("Shipment", shipmentSchema);
+export default model<ShipmentType>("Shipment", shipmentSchema);
 

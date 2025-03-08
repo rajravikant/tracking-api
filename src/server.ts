@@ -27,12 +27,6 @@ app.use(
 );
 app.use(cookieParser());
 
-
-
-
-
-
-
 app.use("/api", shipmentRoutes);
 
 app.use(notFoundHandler);
